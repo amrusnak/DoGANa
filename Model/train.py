@@ -1,5 +1,6 @@
 import time
 import torch
+import logging
 import wandb
 from options.train_options import TrainOptions
 from data import create_dataset
@@ -18,7 +19,6 @@ if __name__ == '__main__':
 
     model = create_model(opt)      # create a model given opt.model and other options
     print('The number of training images = %d' % dataset_size)
-    wandb.watch(model)
 
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
     opt.visualizer = visualizer
