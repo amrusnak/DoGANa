@@ -20,6 +20,8 @@ class CUTModel(BaseModel):
         """  Configures options specific for CUT model
         """
         parser.add_argument('--CUT_mode', type=str, default="CUT", choices='(CUT, cut, FastCUT, fastcut)')
+        parser.add_argument('--edgeLoss', type=float, default=0.0)
+
 
         parser.add_argument('--lambda_GAN', type=float, default=1.0, help='weight for GAN loss：GAN(G(X))')
         parser.add_argument('--lambda_NCE', type=float, default=1.0, help='weight for NCE loss: NCE(G(X), X)')
@@ -193,6 +195,15 @@ class CUTModel(BaseModel):
             loss_NCE_both = self.loss_NCE
 
         self.loss_G = self.loss_G_GAN + loss_NCE_both
+
+        if self.opt.edgeLoss > 0.0:
+            inputImg = cv2.cvtColor(numpy.array(torchvision.transforms.ToPILImage("RGB")(self.real_A)), cv2.COLOR_BGR2GRAY)
+            outputImg = cv2.cvtColor(numpy.array(torchvision.transforms.ToPILImage("RGB")(self.fake_B)), cv2.COLOR_BGR2GRAY)
+            edgesR = cv2.Canny(grayR, 60, 120)
+            edgesG= cv2.Canny(grayG, 60, 120)
+            (scoreEdge, diffE) = structural_similarity(edgesR, edgesG, full=True)
+            edgeScore = scoreEdge * self.opt.edgeLoss
+            self.loss_G = self.loss_G - edgeScore 
         return self.loss_G
 
     def calculate_NCE_loss(self, src, tgt):
