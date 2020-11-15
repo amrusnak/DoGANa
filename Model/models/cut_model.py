@@ -203,8 +203,8 @@ class CUTModel(BaseModel):
         self.loss_G = self.loss_G_GAN + loss_NCE_both
 
         if self.opt.edgeLoss > 0.0:
-            inputImg = cv2.cvtColor(numpy.array(torchvision.transforms.ToPILImage("RGB")(self.real_A)), cv2.COLOR_BGR2GRAY)
-            outputImg = cv2.cvtColor(numpy.array(torchvision.transforms.ToPILImage("RGB")(self.fake_B)), cv2.COLOR_BGR2GRAY)
+            inputImg = cv2.cvtColor(numpy.array(torchvision.transforms.ToPILImage("RGB")(self.real_A[0])), cv2.COLOR_BGR2GRAY)
+            outputImg = cv2.cvtColor(numpy.array(torchvision.transforms.ToPILImage("RGB")(self.fake_B[0])), cv2.COLOR_BGR2GRAY)
             edgesR = cv2.Canny(grayR, 60, 120)
             edgesG= cv2.Canny(grayG, 60, 120)
             (scoreEdge, diffE) = structural_similarity(edgesR, edgesG, full=True)
