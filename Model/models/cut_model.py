@@ -27,7 +27,8 @@ class CUTModel(BaseModel):
         """
         parser.add_argument('--CUT_mode', type=str, default="CUT", choices='(CUT, cut, FastCUT, fastcut)')
         parser.add_argument('--edgeLoss', type=float, default=0.0)
-
+        parser.add_argument('--canny1', type=int, default=100)
+        parser.add_argument('--canny2', type=int, default=200)
 
         parser.add_argument('--lambda_GAN', type=float, default=1.0, help='weight for GAN loss：GAN(G(X))')
         parser.add_argument('--lambda_NCE', type=float, default=1.0, help='weight for NCE loss: NCE(G(X), X)')
@@ -208,8 +209,8 @@ class CUTModel(BaseModel):
             # torch.save(self.fake_B, 'fake_b.pt')
             inputImg = cv2.cvtColor(numpy.array(torchvision.transforms.ToPILImage("RGB")(self.real_A[0])), cv2.COLOR_BGR2GRAY)
             outputImg = cv2.cvtColor(numpy.array(torchvision.transforms.ToPILImage("RGB")(self.fake_B[0])), cv2.COLOR_BGR2GRAY)
-            edgesR = cv2.Canny(inputImg, 60, 120)
-            edgesG= cv2.Canny(outputImg, 60, 120)
+            edgesR = cv2.Canny(inputImg, self.opt.canny1, self.opt.canny2)
+            edgesG= cv2.Canny(outputImg, self.opt.canny1, self.opt.canny2)
 
             (scoreEdge, diffE) = structural_similarity(edgesR, edgesG, full=True)
             edgeScore = scoreEdge * self.opt.edgeLoss
