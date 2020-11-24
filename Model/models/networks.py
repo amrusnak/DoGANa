@@ -1183,6 +1183,7 @@ class ResnetBlock(nn.Module):
 
         Returns a conv block (with a conv layer, a normalization layer, and a non-linearity layer (ReLU))
         """
+        
         conv_block = []
         p = 0
         if padding_type == 'reflect':
@@ -1228,7 +1229,7 @@ class ResnetBlock(nn.Module):
                     raise NotImplementedError('padding [%s] is not implemented' % padding_type)
                 conv_block += [nn.Conv2d(dim, dim, kernel_size=3, padding=p, bias=use_bias), norm_layer(dim)]
 
-                return nn.Sequential(*conv_block)
+        return nn.Sequential(*conv_block)
 
     def forward(self, x):
         """Forward function (with skip connections)"""
