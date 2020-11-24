@@ -1171,7 +1171,7 @@ class ResnetBlock(nn.Module):
         super(ResnetBlock, self).__init__()
         self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias, norm_type)
 
-    def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias):
+    def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type):
         """Construct a convolutional block.
 
         Parameters:
