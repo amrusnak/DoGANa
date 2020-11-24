@@ -250,7 +250,7 @@ def define_G(input_nc, output_nc, ngf, netG, norm='batch', use_dropout=False, in
     norm_layer = get_norm_layer(norm_type=norm)
 
     if netG == 'resnet_9blocks':
-        net = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, no_antialias=no_antialias, no_antialias_up=no_antialias_up, n_blocks=9, opt=opt)
+        net = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, no_antialias=no_antialias, no_antialias_up=no_antialias_up, n_blocks=9, opt=opt, norm_type=norm)
     elif netG == 'resnet_6blocks':
         net = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, no_antialias=no_antialias, no_antialias_up=no_antialias_up, n_blocks=6, opt=opt)
     elif netG == 'resnet_4blocks':
@@ -918,7 +918,7 @@ class ResnetGenerator(nn.Module):
     We adapt Torch code and idea from Justin Johnson's neural style transfer project(https://github.com/jcjohnson/fast-neural-style)
     """
 
-    def __init__(self, input_nc, output_nc, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, padding_type='reflect', no_antialias=False, no_antialias_up=False, opt=None):
+    def __init__(self, input_nc, output_nc, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, padding_type='reflect', no_antialias=False, no_antialias_up=False, opt=None, norm_type="batch"):
         """Construct a Resnet-based generator
 
         Parameters:
@@ -937,47 +937,84 @@ class ResnetGenerator(nn.Module):
             use_bias = norm_layer.func == nn.InstanceNorm2d
         else:
             use_bias = norm_layer == nn.InstanceNorm2d
+        if (norm_type == 'spectral'):
+            model = [nn.ReflectionPad2d(3),
+                     norm_layer(nn.Conv2d(input_nc, ngf, kernel_size=7, padding=0, bias=use_bias)),
+                     nn.ReLU(True)]
 
-        model = [nn.ReflectionPad2d(3),
-                 nn.Conv2d(input_nc, ngf, kernel_size=7, padding=0, bias=use_bias),
-                 norm_layer(ngf),
-                 nn.ReLU(True)]
 
-        n_downsampling = 2
-        for i in range(n_downsampling):  # add downsampling layers
-            mult = 2 ** i
-            if(no_antialias):
-                model += [nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3, stride=2, padding=1, bias=use_bias),
-                          norm_layer(ngf * mult * 2),
-                          nn.ReLU(True)]
-            else:
-                model += [nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3, stride=1, padding=1, bias=use_bias),
-                          norm_layer(ngf * mult * 2),
-                          nn.ReLU(True),
-                          Downsample(ngf * mult * 2)]
+            n_downsampling = 2
+            for i in range(n_downsampling):  # add downsampling layers
+                mult = 2 ** i
+                if(no_antialias):
+                    model += [norm_layer(nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3, stride=2, padding=1, bias=use_bias)),
+                              nn.ReLU(True)]
+                else:
+                    model += [norm_layer(nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3, stride=1, padding=1, bias=use_bias)),
+                              nn.ReLU(True),
+                              Downsample(ngf * mult * 2)]
 
-        mult = 2 ** n_downsampling
-        for i in range(n_blocks):       # add ResNet blocks
+            mult = 2 ** n_downsampling
+            for i in range(n_blocks):       # add ResNet blocks
 
-            model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias)]
+                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias)]
 
-        for i in range(n_downsampling):  # add upsampling layers
-            mult = 2 ** (n_downsampling - i)
-            if no_antialias_up:
-                model += [nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2),
-                                             kernel_size=3, stride=2,
-                                             padding=1, output_padding=1,
-                                             bias=use_bias),
-                          norm_layer(int(ngf * mult / 2)),
-                          nn.ReLU(True)]
-            else:
-                model += [Upsample(ngf * mult),
-                          nn.Conv2d(ngf * mult, int(ngf * mult / 2),
-                                    kernel_size=3, stride=1,
-                                    padding=1,  # output_padding=1,
-                                    bias=use_bias),
-                          norm_layer(int(ngf * mult / 2)),
-                          nn.ReLU(True)]
+            for i in range(n_downsampling):  # add upsampling layers
+                mult = 2 ** (n_downsampling - i)
+                if no_antialias_up:
+                    model += [norm_layer(nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2),
+                                                 kernel_size=3, stride=2,
+                                                 padding=1, output_padding=1,
+                                                 bias=use_bias)),
+                              nn.ReLU(True)]
+                else:
+                    model += [Upsample(ngf * mult),
+                              norm_layer(nn.Conv2d(ngf * mult, int(ngf * mult / 2),
+                                        kernel_size=3, stride=1,
+                                        padding=1,  # output_padding=1,
+                                        bias=use_bias)),
+                              nn.ReLU(True)]
+        else:
+            model = [nn.ReflectionPad2d(3),
+                     nn.Conv2d(input_nc, ngf, kernel_size=7, padding=0, bias=use_bias),
+                     norm_layer(ngf),
+                     nn.ReLU(True)]
+
+            n_downsampling = 2
+            for i in range(n_downsampling):  # add downsampling layers
+                mult = 2 ** i
+                if(no_antialias):
+                    model += [nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3, stride=2, padding=1, bias=use_bias),
+                              norm_layer(ngf * mult * 2),
+                              nn.ReLU(True)]
+                else:
+                    model += [nn.Conv2d(ngf * mult, ngf * mult * 2, kernel_size=3, stride=1, padding=1, bias=use_bias),
+                              norm_layer(ngf * mult * 2),
+                              nn.ReLU(True),
+                              Downsample(ngf * mult * 2)]
+
+            mult = 2 ** n_downsampling
+            for i in range(n_blocks):       # add ResNet blocks
+
+                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias)]
+
+            for i in range(n_downsampling):  # add upsampling layers
+                mult = 2 ** (n_downsampling - i)
+                if no_antialias_up:
+                    model += [nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2),
+                                                 kernel_size=3, stride=2,
+                                                 padding=1, output_padding=1,
+                                                 bias=use_bias),
+                              norm_layer(int(ngf * mult / 2)),
+                              nn.ReLU(True)]
+                else:
+                    model += [Upsample(ngf * mult),
+                              nn.Conv2d(ngf * mult, int(ngf * mult / 2),
+                                        kernel_size=3, stride=1,
+                                        padding=1,  # output_padding=1,
+                                        bias=use_bias),
+                              norm_layer(int(ngf * mult / 2)),
+                              nn.ReLU(True)]
         model += [nn.ReflectionPad2d(3)]
         model += [nn.Conv2d(ngf, output_nc, kernel_size=7, padding=0)]
         model += [nn.Tanh()]
