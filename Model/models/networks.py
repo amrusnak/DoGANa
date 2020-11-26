@@ -1004,9 +1004,8 @@ class ResnetGenerator(nn.Module):
             mult = 2 ** n_downsampling
             for i in range(n_blocks):       # add ResNet blocks
 
-                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type)]
-            if (selfAttn == True):
-                model += SelfAttention(ngf * mult)
+                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type, selfAttn=selfAttn)]
+           
             for i in range(n_downsampling):  # add upsampling layers
                 mult = 2 ** (n_downsampling - i)
                 if no_antialias_up:
@@ -1044,9 +1043,8 @@ class ResnetGenerator(nn.Module):
             mult = 2 ** n_downsampling
             for i in range(n_blocks):       # add ResNet blocks
 
-                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type)]
-            if (selfAttn == True):
-                model += SelfAttention(ngf * mult)
+                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type, , selfAttn=selfAttn)]
+
             for i in range(n_downsampling):  # add upsampling layers
                 mult = 2 ** (n_downsampling - i)
                 if no_antialias_up:
@@ -1209,7 +1207,7 @@ class ResnetEncoder(nn.Module):
 class ResnetBlock(nn.Module):
     """Define a Resnet block"""
 
-    def __init__(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type):
+    def __init__(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn):
         """Initialize the Resnet block
 
         A resnet block is a conv block with skip connections
@@ -1217,10 +1215,11 @@ class ResnetBlock(nn.Module):
         and implement skip connections in <forward> function.
         Original Resnet paper: https://arxiv.org/pdf/1512.03385.pdf
         """
-        super(ResnetBlock, self).__init__()
-        self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias, norm_type)
 
-    def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type):
+        super(ResnetBlock, self).__init__()
+        self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn)
+
+    def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn):
         """Construct a convolutional block.
 
         Parameters:
@@ -1232,7 +1231,10 @@ class ResnetBlock(nn.Module):
 
         Returns a conv block (with a conv layer, a normalization layer, and a non-linearity layer (ReLU))
         """
-        
+        print(selfAttn)
+        if (selfAttn == True):
+                print('self attn block in ResnetBlock')
+                model += SelfAttention(ngf * mult)
         conv_block = []
         p = 0
         if padding_type == 'reflect':
