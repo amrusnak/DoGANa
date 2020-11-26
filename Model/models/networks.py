@@ -8,6 +8,7 @@ import numpy as np
 from .stylegan_networks import StyleGAN2Discriminator, StyleGAN2Generator, TileStyleGAN2Discriminator
 from .spectral import SpectralNorm
 
+
 ###############################################################################
 # Helper Functions
 ###############################################################################
@@ -218,7 +219,7 @@ def init_net(net, init_type='normal', init_gain=0.02, gpu_ids=[], debug=False, i
     return net
 
 
-def define_G(input_nc, output_nc, ngf, netG, norm='batch', use_dropout=False, init_type='normal',
+def define_G(input_nc, output_nc, ngf, netG, norm='instance', selfAttn=False, use_dropout=False, init_type='normal',
              init_gain=0.02, no_antialias=False, no_antialias_up=False, gpu_ids=[], opt=None):
     """Create a generator
 
@@ -763,6 +764,52 @@ class ResBlocks(nn.Module):
 ##################################################################################
 # Basic Blocks
 ##################################################################################
+
+
+def init_conv(conv, glu=True):
+    init.xavier_uniform_(conv.weight)
+    if conv.bias is not None:
+        conv.bias.data.zero_()
+
+class SelfAttention(nn.Module):
+    """ Self attention Layer"""
+    def __init__(self,in_dim,activation=F.relu):
+        super(SelfAttention,self).__init__()
+        self.chanel_in = in_dim
+        self.activation = activation
+        
+        self.query_conv = nn.Conv2d(in_channels = in_dim , out_channels = in_dim//8 , kernel_size= 1)
+        self.key_conv = nn.Conv2d(in_channels = in_dim , out_channels = in_dim//8 , kernel_size= 1)
+        self.value_conv = nn.Conv2d(in_channels = in_dim , out_channels = in_dim , kernel_size= 1)
+        self.gamma = nn.Parameter(torch.zeros(1))
+
+        self.softmax  = nn.Softmax(dim=-1) #
+
+        init_conv(self.query_conv)
+        init_conv(self.key_conv)
+        init_conv(self.value_conv)
+        
+    def forward(self,x):
+        """
+            inputs :
+                x : input feature maps( B X C X W X H)
+            returns :
+                out : self attention value + input feature 
+                attention: B X N X N (N is Width*Height)
+        """
+        m_batchsize,C,width ,height = x.size()
+        proj_query  = self.query_conv(x).view(m_batchsize,-1,width*height).permute(0,2,1) # B X CX(N)
+        proj_key =  self.key_conv(x).view(m_batchsize,-1,width*height) # B X C x (*W*H)
+        energy =  torch.bmm(proj_query,proj_key) # transpose check
+        attention = self.softmax(energy) # BX (N) X (N) 
+        proj_value = self.value_conv(x).view(m_batchsize,-1,width*height) # B X C X N
+
+        out = torch.bmm(proj_value,attention.permute(0,2,1) )
+        out = out.view(m_batchsize,C,width,height)
+        
+        out = self.gamma*out + x
+        return out
+
 def cat_feature(x, y):
     y_expand = y.view(y.size(0), y.size(1), 1, 1).expand(
         y.size(0), y.size(1), x.size(2), x.size(3))
@@ -918,7 +965,7 @@ class ResnetGenerator(nn.Module):
     We adapt Torch code and idea from Justin Johnson's neural style transfer project(https://github.com/jcjohnson/fast-neural-style)
     """
 
-    def __init__(self, input_nc, output_nc, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, padding_type='reflect', no_antialias=False, no_antialias_up=False, opt=None, norm_type="batch"):
+    def __init__(self, input_nc, output_nc, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, padding_type='reflect', no_antialias=False, no_antialias_up=False, opt=None, norm_type="batch", selfAttn=False):
         """Construct a Resnet-based generator
 
         Parameters:
@@ -958,7 +1005,8 @@ class ResnetGenerator(nn.Module):
             for i in range(n_blocks):       # add ResNet blocks
 
                 model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type)]
-
+            if (selfAttn == True):
+                model += SelfAttention(ngf * mult)
             for i in range(n_downsampling):  # add upsampling layers
                 mult = 2 ** (n_downsampling - i)
                 if no_antialias_up:
@@ -997,7 +1045,8 @@ class ResnetGenerator(nn.Module):
             for i in range(n_blocks):       # add ResNet blocks
 
                 model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias)]
-
+            if (selfAttn == True):
+                model += SelfAttention(ngf * mult)
             for i in range(n_downsampling):  # add upsampling layers
                 mult = 2 ** (n_downsampling - i)
                 if no_antialias_up:
