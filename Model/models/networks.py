@@ -1231,10 +1231,7 @@ class ResnetBlock(nn.Module):
 
         Returns a conv block (with a conv layer, a normalization layer, and a non-linearity layer (ReLU))
         """
-        print(selfAttn)
-        if (selfAttn == True):
-                print('self attn block in ResnetBlock')
-                model += SelfAttention(ngf * mult)
+    
         conv_block = []
         p = 0
         if padding_type == 'reflect':
@@ -1279,7 +1276,8 @@ class ResnetBlock(nn.Module):
                 else:
                     raise NotImplementedError('padding [%s] is not implemented' % padding_type)
                 conv_block += [nn.Conv2d(dim, dim, kernel_size=3, padding=p, bias=use_bias), norm_layer(dim)]
-
+        if (selfAttn == True):
+                conv_block += SelfAttention(dim * dim)
         return nn.Sequential(*conv_block)
 
     def forward(self, x):
