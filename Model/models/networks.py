@@ -1217,6 +1217,7 @@ class ResnetBlock(nn.Module):
         """
 
         super(ResnetBlock, self).__init__()
+        self.selfAttn = selfAttn
         self.selfAttention = SelfAttention(dim)
         self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn)
 
@@ -1283,7 +1284,7 @@ class ResnetBlock(nn.Module):
     def forward(self, x):
         """Forward function (with skip connections)"""
         out = x + self.conv_block(x)  # add skip connections
-         if (selfAttn == True):
+        if (self.selfAttn == True):
                 out = self.selfAttention(out)
         return out
 
