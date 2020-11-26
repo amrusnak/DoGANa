@@ -1217,7 +1217,6 @@ class ResnetBlock(nn.Module):
         """
 
         super(ResnetBlock, self).__init__()
-        self.selfAttention = SelfAttention(dim)
         self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn)
 
     def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn):
@@ -1278,7 +1277,7 @@ class ResnetBlock(nn.Module):
                     raise NotImplementedError('padding [%s] is not implemented' % padding_type)
                 conv_block += [nn.Conv2d(dim, dim, kernel_size=3, padding=p, bias=use_bias), norm_layer(dim)]
         if (selfAttn == True):
-                out = self.selfAttention(*conv_block)
+                out = SelfAttention(*conv_block)
                 return nn.Sequential(out)
         return nn.Sequential(*conv_block)
 
