@@ -336,7 +336,7 @@ def define_D(input_nc, ndf, netD, n_layers_D=3, norm='batch', init_type='normal'
 
 
 ##############################################################################
-# Classes
+# ClassesSelfAtt
 ##############################################################################
 class GANLoss(nn.Module):
     """Define different GAN objectives.
@@ -1065,6 +1065,8 @@ class ResnetGenerator(nn.Module):
         model += [nn.ReflectionPad2d(3)]
         model += [nn.Conv2d(ngf, output_nc, kernel_size=7, padding=0)]
         model += [nn.Tanh()]
+        if (self.selfAttn == True):
+                model += [self.selfAttention(ngf)]
 
         self.model = nn.Sequential(*model)
 
@@ -1285,7 +1287,7 @@ class ResnetBlock(nn.Module):
         """Forward function (with skip connections)"""
         out = x + self.conv_block(x)  # add skip connections
         if (self.selfAttn == True):
-                out = self.selfAttention(out)
+                #out = self.selfAttention(out)
         return out
 
 
