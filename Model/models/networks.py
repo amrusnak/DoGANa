@@ -1041,6 +1041,10 @@ class ResnetGenerator(nn.Module):
                               Downsample(ngf * mult * 2)]
 
             mult = 2 ** n_downsampling
+
+             if (selfAttn == True):
+                model += [SelfAttention(ngf * mult)]
+                
             for i in range(n_blocks):       # add ResNet blocks
 
                 model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type, selfAttn=selfAttn)]
@@ -1065,8 +1069,6 @@ class ResnetGenerator(nn.Module):
                                         bias=use_bias),
                               norm_layer(int(ngf * mult / 2)),
                               nn.ReLU(True)]
-        if (selfAttn == True):
-                model += [SelfAttention(ngf)]
 
         model += [nn.ReflectionPad2d(3)]
         model += [nn.Conv2d(ngf, output_nc, kernel_size=7, padding=0)]
