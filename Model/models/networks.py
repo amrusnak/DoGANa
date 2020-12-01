@@ -1063,7 +1063,7 @@ class ResnetGenerator(nn.Module):
                               norm_layer(int(ngf * mult / 2)),
                               nn.ReLU(True)]
         if (selfAttn == True):
-                model += [SelfAttention(ngf * mult)]
+                model += [SelfAttention(ngf)]
 
         model += [nn.ReflectionPad2d(3)]
         model += [nn.Conv2d(ngf, output_nc, kernel_size=7, padding=0)]
