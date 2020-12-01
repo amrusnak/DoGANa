@@ -1286,7 +1286,7 @@ class ResnetBlock(nn.Module):
     def forward(self, x):
         """Forward function (with skip connections)"""
         out = x + self.conv_block(x)  # add skip connections
-        if (self.selfAttn == True):
+        #if (self.selfAttn == True):
                 #out = self.selfAttention(out)
         return out
 
