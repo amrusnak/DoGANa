@@ -1062,12 +1062,14 @@ class ResnetGenerator(nn.Module):
                                         bias=use_bias),
                               norm_layer(int(ngf * mult / 2)),
                               nn.ReLU(True)]
+        if (selfAttn == True):
+                model += [SelfAttention(ngf * mult)]
+
         model += [nn.ReflectionPad2d(3)]
         model += [nn.Conv2d(ngf, output_nc, kernel_size=7, padding=0)]
         model += [nn.Tanh()]
+
         
-        if (selfAttn == True):
-                model += [SelfAttention(ngf)]
 
         self.model = nn.Sequential(*model)
 
