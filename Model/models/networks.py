@@ -1065,6 +1065,7 @@ class ResnetGenerator(nn.Module):
         model += [nn.ReflectionPad2d(3)]
         model += [nn.Conv2d(ngf, output_nc, kernel_size=7, padding=0)]
         model += [nn.Tanh()]
+        
         if (selfAttn == True):
                 model += [SelfAttention(ngf)]
 
