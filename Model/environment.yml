@@ -14,3 +14,4 @@ dependencies:
   - visdom==0.1.8
   - packaging
   - GPUtil==1.4.0
+  - wandb == 0.10.10
