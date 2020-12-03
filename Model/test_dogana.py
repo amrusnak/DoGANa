@@ -46,6 +46,7 @@ if __name__ == '__main__':
     opt.phase = 'train'
     opt.checkpoints_dir = '/dhlabdata4/makhmuto/final_checkpoints/'
     opt.pretrained_name = opt.dogana
+    opt.name = opt.dogana
     opt.results_dir = './results_dogana/'
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     # train_dataset = create_dataset(util.copyconf(opt, phase="train"))
