@@ -68,6 +68,8 @@ class BaseOptions():
         parser.add_argument('--stylegan2_G_num_downsampling',
                             default=1, type=int,
                             help='Number of downsampling layers used by StyleGAN2Generator')
+        # DoGANa model testing
+        parser.add_argument('--dogana', default='cpaint', type=str, help='DoGANa model: cpaint, bwpaint, bwdraw, underwater')
 
         self.initialized = True
         return parser
