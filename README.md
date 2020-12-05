@@ -82,11 +82,11 @@ To test the models, first prepare the test data input in a directory `DATA_DIR`,
 To test a model, run:
 
 ```
-python test_dogana.py --dataroot [DATA_DIR] --results_dir [RESULTS_DIR] --dogana [MODEL_NAME]
+python test_dogana.py --dataroot [DATA_DIR] --results_dir [RESULTS_DIR] --name [MODEL_NAME]
 ```
 
 If you do not specify `results_dir`, the output results will be saved in `results/`.
 
-The parameter `dogana` specifies which of the four models you would like to test. The options are: `bwpaint`, `bwdraw`, `cpaint`, `underwater`.
+The parameter `name` specifies which of the four models you would like to test. The options are: `bwpaint`, `bwdraw`, `cpaint`, `underwater`.
 
 To access more testing parameters, run `python test_dogana.py --help`.
