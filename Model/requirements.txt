@@ -5,3 +5,5 @@ visdom>=0.1.8.8
 packaging
 GPUtil>=1.4.0
 wandb>=0.10.10
+opencv==4.5.0
+scikit-image==0.17.2
