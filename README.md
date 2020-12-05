@@ -5,11 +5,11 @@
 The purpose of this project is to transform the different ways we visualize Venice. We propose four implementations in this project:
 
 - Photorealistic Venice:
-  - Monochrome drawings $\rightarrow$ photos (model name: `bwdraw`)
-  - Monochrome paintings $\rightarrow$ photos (model name: `bwpaint`)
-  - Colour paintings $\rightarrow$ photos (model name: `cpaint`)
+  - Monochrome drawings -> photos (model name: `bwdraw`)
+  - Monochrome paintings -> photos (model name: `bwpaint`)
+  - Colour paintings -> photos (model name: `cpaint`)
 - Underwater Venice:
-  - Photos $\rightarrow$ underwater rendering of the photos (model name: `underwater`)
+  - Photos -> underwater rendering of the photos (model name: `underwater`)
 
 Here are some input/output pairs of each of the models:
   
@@ -82,11 +82,11 @@ To test the models, first prepare the test data input in a directory `DATA_DIR`,
 To test a model, run:
 
 ```
-python test_dogana.py --dataroot [DATA_DIR] --results_dir [RESULTS_DIR] --dogana [MODEL_NAME]
+python test_dogana.py --dataroot [DATA_DIR] --results_dir [RESULTS_DIR] --name [MODEL_NAME]
 ```
 
 If you do not specify `results_dir`, the output results will be saved in `results/`.
 
-The parameter `dogana` specifies which of the four models you would like to test. The options are: `bwpaint`, `bwdraw`, `cpaint`, `underwater`.
+The parameter `name` specifies which of the four models you would like to test. The options are: `bwpaint`, `bwdraw`, `cpaint`, `underwater`.
 
 To access more testing parameters, run `python test_dogana.py --help`.
