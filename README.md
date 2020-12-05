@@ -13,7 +13,7 @@ The purpose of this project is to transform the different ways we visualize Veni
 
 Here are some input/output pairs of each of the models:
   
-[todo examples]
+[TODO examples]
   
 ## Getting started
 
@@ -45,9 +45,10 @@ pip install -r requirements.txt
 
 #### Preparing data
 
-[todo]
+[TODO describe cropping, cutting out frames]
 
-### Training
+### Data directory format
+<a name="dataformat"></a>
 
 First, prepare your training data in a directory, in the following structure (the image names do not matter, as long as images are in a jpg/png format):
 
@@ -63,6 +64,10 @@ DATA_DIR
     └── ...
 ```
 
+You can use the same directory for training or testing. Alternatively, you can prepare a separate directory to test, in the same folder structure as specified above.
+
+### Training
+
 To train a model, simply run `python train.py --dataroot [DATA_DIR]`. To access modifiable training parameters, run `python train.py --help`.
 
 The training script including modified parameters used for `cpaint`/`bwpaint`/`bwdraw` models is the following:
@@ -73,11 +78,11 @@ python train.py --dataroot [DATA_DIR] --name [MODEL_NAME] --CUT_mode CUT --n_epo
 
 The training script including modified parameters used for `underwater` model is the following:
 
-[todo]
+[TODO]
 
 ### Testing
 
-To test the models, first prepare the test data input in a directory `DATA_DIR`, as a list of images you would like to test.
+To test the models, first prepare the test data input in a directory `DATA_DIR`, as specified in the [Data format section](#dataformat).
 
 To test a model, run:
 
