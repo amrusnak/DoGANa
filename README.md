@@ -5,11 +5,11 @@
 The purpose of this project is to transform the different ways we visualize Venice. We propose four implementations in this project:
 
 - Photorealistic Venice:
-  - Monochrome drawings <img src="https://render.githubusercontent.com/render/math?math=\rightarrow"> photos (model name: `bwdraw`)
-  - Monochrome paintings <img src="https://render.githubusercontent.com/render/math?math=\rightarrow"> photos (model name: `bwpaint`)
-  - Colour paintings <img src="https://render.githubusercontent.com/render/math?math=\rightarrow"> photos (model name: `cpaint`)
+  - Monochrome drawings -> photos (model name: `bwdraw`)
+  - Monochrome paintings -> photos (model name: `bwpaint`)
+  - Colour paintings -> photos (model name: `cpaint`)
 - Underwater Venice:
-  - Photos $\rightarrow$ underwater rendering of the photos (model name: `underwater`)
+  - Photos -> underwater rendering of the photos (model name: `underwater`)
 
 Here are some input/output pairs of each of the models:
   
