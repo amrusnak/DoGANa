@@ -45,7 +45,10 @@ pip install -r requirements.txt
 
 #### Preparing data
 
-[TODO describe cropping, cutting out frames]
+[TODO]
+
+- remove watermarks
+- crop out frames
 
 ### Data directory format
 <a name="dataformat"></a>
