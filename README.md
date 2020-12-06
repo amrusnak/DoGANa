@@ -5,9 +5,8 @@
 The purpose of this project is to transform the different ways we visualize Venice. We propose four implementations in this project:
 
 - Photorealistic Venice:
-  - Monochrome drawings -> photos (model name: `bwdraw`)
-  - Monochrome paintings -> photos (model name: `bwpaint`)
-  - Colour paintings -> photos (model name: `cpaint`)
+  - Monochrome drawings/paintings -> photos (model name: `bw`)
+  - Colour paintings -> photos (model name: `color`)
 - Underwater Venice:
   - Photos -> underwater rendering of the photos (model name: `underwater`)
 
@@ -45,10 +44,17 @@ pip install -r requirements.txt
 
 #### Preparing data
 
-[TODO]
+There are no requirements on image sizes for training or testing. However, if you are using web scraped images, make sure 
+to do the following before training your model:
 
 - remove watermarks
 - crop out frames
+
+For example:
+
+Original image             |  Cropped frame (ready for use)
+:-------------------------:|:-------------------------:
+![](http://fdh.epfl.ch/images/thumb/a/a6/Painting-frame.jpeg/300px-Painting-frame.jpeg)  |  ![](http://fdh.epfl.ch/images/thumb/1/11/Painting-no-frame.jpg/300px-Painting-no-frame.jpg)
 
 ### Data directory format
 <a name="dataformat"></a>
@@ -73,7 +79,7 @@ You can use the same directory for training or testing. Alternatively, you can p
 
 To train a model, simply run `python train.py --dataroot [DATA_DIR]`. To access modifiable training parameters, run `python train.py --help`.
 
-The training script including modified parameters used for `cpaint`/`bwpaint`/`bwdraw` models is the following:
+The training script including modified parameters used for `color`/`bw` models is the following:
 
 ```
 python train.py --dataroot [DATA_DIR] --name [MODEL_NAME] --CUT_mode CUT --n_epochs 200 --n_epochs_decay 400 --batch_size 4 --selfAttn True --normG spectral --edgeLoss 0.4 --canny1 250 --canny2 350
@@ -95,6 +101,6 @@ python test_dogana.py --dataroot [DATA_DIR] --results_dir [RESULTS_DIR] --name [
 
 If you do not specify `results_dir`, the output results will be saved in `results/`.
 
-The parameter `name` specifies which of the four models you would like to test. The options are: `bwpaint`, `bwdraw`, `cpaint`, `underwater`.
+The parameter `name` specifies which of the four models you would like to test. The options are: `bw`, `color`, `underwater`.
 
 To access more testing parameters, run `python test_dogana.py --help`.
