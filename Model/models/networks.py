@@ -1003,7 +1003,7 @@ class ResnetGenerator(nn.Module):
 
             mult = 2 ** n_downsampling
 
-            if (selfAttn == True):
+            if (selfAttn):
                 print('selfAttn')
                 #model += [SelfAttention(ngf * mult)]
 
@@ -1011,7 +1011,7 @@ class ResnetGenerator(nn.Module):
 
                 model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type)]
            
-            if (selfAttn == True):
+            if (selfAttn):
                 pass
                 #model += [SelfAttention(ngf * mult)]
 
@@ -1051,7 +1051,7 @@ class ResnetGenerator(nn.Module):
 
             mult = 2 ** n_downsampling
 
-            if (selfAttn == True):
+            if (selfAttn):
                 print('selfAttn')
                 #model += [SelfAttention(ngf * mult)]
 
@@ -1059,7 +1059,7 @@ class ResnetGenerator(nn.Module):
 
                 model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type)]
 
-            if (selfAttn == True):
+            if (selfAttn):
                 pass
                 #model += [SelfAttention(ngf * mult)]
 
