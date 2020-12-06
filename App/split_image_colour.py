@@ -57,6 +57,6 @@ if __name__ == "__main__":
     img_top = cv2.imread(args.path_top)
     img_bottom = cv2.imread(args.path_bottom)
 
-    img_res = split_images(img_top, img_bottom, args.frac)
+    img_res = split_images_colour(img_top, img_bottom, args.frac)
 
     cv2.imwrite(args.output, img_res)
