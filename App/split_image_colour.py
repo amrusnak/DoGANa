@@ -23,7 +23,7 @@ def split_images_colour(top: np.ndarray, bottom: np.ndarray, frac: float) -> np.
 
     #height, width = top.shape
     height, width, colour = top.shape
-    cutoff = int(height * frac)
+    cutoff = height - int(height * frac)
 
     # wavy split
     out = np.zeros(top.shape)
