@@ -29,7 +29,7 @@ class CUTModel(BaseModel):
         parser.add_argument('--edgeLoss', type=float, default=0.0)
         parser.add_argument('--canny1', type=int, default=100)
         parser.add_argument('--canny2', type=int, default=200)
-        parser.add_argument('--selfAttn', type=bool, default=False)
+        parser.add_argument('--selfAttn', type=int, default=0)
 
         parser.add_argument('--lambda_GAN', type=float, default=1.0, help='weight for GAN loss：GAN(G(X))')
         parser.add_argument('--lambda_NCE', type=float, default=1.0, help='weight for NCE loss: NCE(G(X), X)')
@@ -80,7 +80,7 @@ class CUTModel(BaseModel):
             self.model_names = ['G', 'F', 'D']
         else:  # during test time, only load G
             self.model_names = ['G']
-        if(opt.selfAttn):
+        if(opt.selfAttn > 0):
         	print('attn1')
         # define networks (both generator and discriminator)
         self.netG = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.normG, opt.selfAttn, not opt.no_dropout, opt.init_type, opt.init_gain, opt.no_antialias, opt.no_antialias_up, self.gpu_ids, opt)
