@@ -1004,7 +1004,7 @@ class ResnetGenerator(nn.Module):
             mult = 2 ** n_downsampling
 
             if (selfAttn == True):
-                pass
+                print('selfAttn')
                 #model += [SelfAttention(ngf * mult)]
 
             for i in range(n_blocks):       # add ResNet blocks
@@ -1052,7 +1052,7 @@ class ResnetGenerator(nn.Module):
             mult = 2 ** n_downsampling
 
             if (selfAttn == True):
-                pass
+                print('selfAttn')
                 #model += [SelfAttention(ngf * mult)]
 
             for i in range(n_blocks):       # add ResNet blocks
