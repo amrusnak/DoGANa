@@ -253,9 +253,9 @@ def define_G(input_nc, output_nc, ngf, netG, norm='instance', selfAttn=False, us
     if netG == 'resnet_9blocks':
         net = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, no_antialias=no_antialias, no_antialias_up=no_antialias_up, n_blocks=9, opt=opt, norm_type=norm, selfAttn=selfAttn)
     elif netG == 'resnet_6blocks':
-        net = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, no_antialias=no_antialias, no_antialias_up=no_antialias_up, n_blocks=6, opt=opt)
+        net = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, no_antialias=no_antialias, no_antialias_up=no_antialias_up, n_blocks=6, opt=opt, selfAttn=selfAttn)
     elif netG == 'resnet_4blocks':
-        net = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, no_antialias=no_antialias, no_antialias_up=no_antialias_up, n_blocks=4, opt=opt)
+        net = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, no_antialias=no_antialias, no_antialias_up=no_antialias_up, n_blocks=4, opt=opt, selfAttn=selfAttn)
     elif netG == 'unet_128':
         net = UnetGenerator(input_nc, output_nc, 7, ngf, norm_layer=norm_layer, use_dropout=use_dropout)
     elif netG == 'unet_256':
@@ -1008,7 +1008,7 @@ class ResnetGenerator(nn.Module):
 
             for i in range(n_blocks):       # add ResNet blocks
 
-                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type, selfAttn=selfAttn)]
+                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type)]
            
             if (selfAttn == True):
                 model += [SelfAttention(ngf * mult)]
@@ -1054,7 +1054,7 @@ class ResnetGenerator(nn.Module):
 
             for i in range(n_blocks):       # add ResNet blocks
 
-                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type, selfAttn=selfAttn)]
+                model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias, norm_type=norm_type)]
 
             if (selfAttn == True):
                 model += [SelfAttention(ngf * mult)]
@@ -1224,7 +1224,7 @@ class ResnetEncoder(nn.Module):
 class ResnetBlock(nn.Module):
     """Define a Resnet block"""
 
-    def __init__(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn):
+    def __init__(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type):
         """Initialize the Resnet block
 
         A resnet block is a conv block with skip connections
@@ -1234,11 +1234,9 @@ class ResnetBlock(nn.Module):
         """
 
         super(ResnetBlock, self).__init__()
-        self.selfAttn = selfAttn
-        self.selfAttention = SelfAttention(dim)
-        self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn)
+        self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias, norm_type)
 
-    def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type, selfAttn):
+    def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias, norm_type,):
         """Construct a convolutional block.
 
         Parameters:
@@ -1301,8 +1299,6 @@ class ResnetBlock(nn.Module):
     def forward(self, x):
         """Forward function (with skip connections)"""
         out = x + self.conv_block(x)  # add skip connections
-        #if (self.selfAttn == True):
-                #out = self.selfAttention(out)
         return out
 
 
