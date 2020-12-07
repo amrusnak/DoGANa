@@ -7,3 +7,4 @@ GPUtil>=1.4.0
 wandb>=0.10.10
 scikit-image==0.17.2
 Pillow==8.0.1
+opencv-python
