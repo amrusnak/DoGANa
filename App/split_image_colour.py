@@ -2,28 +2,13 @@ import argparse
 import numpy as np
 import cv2
 
+
 def split_images(top: np.ndarray, bottom: np.ndarray, frac: float) -> np.ndarray:
-    assert top.shape == bottom.shape, 'images need to have the same shape'
-
-    height, width = top.shape
-    cutoff = int(height * frac)
-
-    # wavy split
-    out = np.zeros(top.shape)
-    for w in range(width):
-        c = cutoff + int(np.sin(np.pi * 0.05 * w) * 4)
-        out[:, w] = np.concatenate((top[:c, w], bottom[c:, w]))
-
-    return out
-
-
-
-def split_images_colour(top: np.ndarray, bottom: np.ndarray, frac: float) -> np.ndarray:
     assert top.shape == bottom.shape, 'images need to have the same shape'
 
     #height, width = top.shape
     height, width, colour = top.shape
-    cutoff = int(height * frac)
+    cutoff = height - int(height * frac)
 
     # wavy split
     out = np.zeros(top.shape)
@@ -34,7 +19,6 @@ def split_images_colour(top: np.ndarray, bottom: np.ndarray, frac: float) -> np.
         out[:, w,:] = np.concatenate((top[:c, w,:], bottom[c:, w,:]))
 
     return out.astype(int)
-
 
     # clean split
     # top_split = top[:cutoff, :]
