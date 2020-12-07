@@ -1,0 +1,7 @@
+opencv-python
+beautifulsoup4==4.6.0
+numpy==1.19.4
+urllib3==1.22
+Pillow==8.0.1
+requests==2.18.4
+selenium
