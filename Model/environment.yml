@@ -6,6 +6,7 @@ dependencies:
 - python=3.6
 - pytorch=1.7.0
 - scipy
+- opencv
 - pip:
   - dominate==2.4.0
   - torchvision==0.8.1
