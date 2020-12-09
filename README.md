@@ -77,12 +77,18 @@ You can use the same directory for training or testing. Alternatively, you can p
 
 ### Training
 
-To train a model, simply run `python train.py --dataroot [DATA_DIR]`. To access modifiable training parameters, run `python train.py --help`.
+To train a model, simply run `python train.py --dataroot [DATA_DIR] --name [MODEL_NAME]`. To access modifiable training parameters, run `python train.py --help`.
 
-The training script including modified parameters used for `color`/`bw` models is the following:
+The training script including modified parameters used for `color` model is the following:
 
 ```
-python train.py --dataroot [DATA_DIR] --name [MODEL_NAME] --CUT_mode CUT --n_epochs 200 --n_epochs_decay 400 --batch_size 4 --selfAttn True --normG spectral --edgeLoss 0.4 --canny1 250 --canny2 350
+python3 train.py--dataroot [DATA_DIR] --name color --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
+```
+
+The training script including modified parameters used for `bw` model is the following:
+
+```
+python3 train.py--dataroot [DATA_DIR] --name bw --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
 ```
 
 The training script including modified parameters used for `underwater` model is the following:
