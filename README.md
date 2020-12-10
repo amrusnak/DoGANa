@@ -94,7 +94,7 @@ python train.py --dataroot [DATA_DIR] --name bw --CUT_mode CUT --n_epochs 150 --
 The training script including modified parameters used for `underwater` model is the following:
 
 ```
-python train.py --dataroot [DATA_DIR] --name underwater9 --CUT_mode CUT --lr 0.0001 --canny1 300 --canny2 400 --edgeLoss 0.7 --n_epochs 150 --n_epochs_decay 250 --normG spectral --normD batch --batch_size 4
+python train.py --dataroot [DATA_DIR] --name underwater --CUT_mode CUT --lr 0.0001 --canny1 300 --canny2 400 --edgeLoss 0.7 --n_epochs 150 --n_epochs_decay 250 --normG spectral --normD batch --batch_size 4
 ```
 
 ### Testing
