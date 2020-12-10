@@ -82,16 +82,20 @@ To train a model, simply run `python train.py --dataroot [DATA_DIR] --name [MODE
 The training script including modified parameters used for `color` model is the following:
 
 ```
-python3 train.py--dataroot [DATA_DIR] --name color --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
+python train.py --dataroot [DATA_DIR] --name color --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
 ```
 
 The training script including modified parameters used for `bw` model is the following:
 
 ```
-python3 train.py--dataroot [DATA_DIR] --name bw --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
+python train.py --dataroot [DATA_DIR] --name bw --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
 ```
 
 The training script including modified parameters used for `underwater` model is the following:
+
+```
+python train.py --dataroot [DATA_DIR] --name underwater9 --CUT_mode CUT --lr 0.0001 --canny1 300 --canny2 400 --edgeLoss 0.7 --n_epochs 150 --n_epochs_decay 250 --normG spectral --normD batch --batch_size 4
+```
 
 [TODO]
 
