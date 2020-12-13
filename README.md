@@ -82,13 +82,13 @@ To train a model, simply run `python train.py --dataroot [DATA_DIR] --name [MODE
 The training script including modified parameters used for `colorPhotoF` model is the following:
 
 ```
-python train.py --dataroot [DATA_DIR] --name color --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
+python train.py --dataroot [DATA_DIR] --name colorPhotoF --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
 ```
 
 The training script including modified parameters used for `bwPhotoF` model is the following:
 
 ```
-python train.py --dataroot [DATA_DIR] --name bw --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
+python train.py --dataroot [DATA_DIR] --name bwPhotoF --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
 ```
 
 The training script including modified parameters used for `underwater` model is the following:
