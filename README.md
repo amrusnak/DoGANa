@@ -6,7 +6,7 @@ The purpose of this project is to transform the different ways we visualize Veni
 
 - Photorealistic Venice:
   - Monochrome drawings/paintings -> photos (model name: `bwPhotoF`)
-  - Colour paintings -> photos (model name: `colorPhotoF`)
+  - Colour paintings -> photos (model name: `cPhotoF`)
 - Underwater Venice:
   - Photos -> underwater rendering of the photos (model name: `underwater`)
 
@@ -79,10 +79,10 @@ You can use the same directory for training or testing. Alternatively, you can p
 
 To train a model, simply run `python train.py --dataroot [DATA_DIR] --name [MODEL_NAME]`. To access modifiable training parameters, run `python train.py --help`.
 
-The training script including modified parameters used for `colorPhotoF` model is the following:
+The training script including modified parameters used for `cPhotoF` model is the following:
 
 ```
-python train.py --dataroot [DATA_DIR] --name colorPhotoF --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
+python train.py --dataroot [DATA_DIR] --name cPhotoF --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
 ```
 
 The training script including modified parameters used for `bwPhotoF` model is the following:
