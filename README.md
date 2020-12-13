@@ -11,18 +11,23 @@ The purpose of this project is to transform the different ways we visualize Veni
   - Photos -> underwater rendering of the photos (model name: `underwater`)
 
 Here are some input/output pairs of each of the models:
-  
-  
+
 <p align="center">
-  <img src="imgs/bw-outputs.png"/>
+  <img src="imgs/bw-outputs.png" width="700"/>
   <br>
     <em>Fig. 1: Monochrome model sample results (left: input monochrome drawing/painting, right: photorealistic rendering)</em>
 </p>
 
 <p align="center">
-  <img src="imgs/color-outputs.png"/>
+  <img src="imgs/color-outputs.png" width="700"/>
   <br>
     <em>Fig. 2: Color model sample results (left: input color painting, right: photorealistic rendering)</em>
+</p>
+
+<p align="center">
+  <img src="imgs/underwater-results.png" width="700"/>
+  <br>
+    <em>Fig. 3: Underwater model sample results (left: input photo, right: underwater rendering of photo)</em>
 </p>
 
 ## Getting started
