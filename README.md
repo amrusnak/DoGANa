@@ -12,8 +12,19 @@ The purpose of this project is to transform the different ways we visualize Veni
 
 Here are some input/output pairs of each of the models:
   
-[TODO examples]
   
+<p align="center">
+  <img src="imgs/bw-outputs.png"/>
+  <br>
+    <em>Fig. 1: Monochrome model sample results (left: input monochrome drawing/painting, right: photorealistic rendering)</em>
+</p>
+
+<p align="center">
+  <img src="imgs/color-outputs.png"/>
+  <br>
+    <em>Fig. 2: Color model sample results (left: input color painting, right: photorealistic rendering)</em>
+</p>
+
 ## Getting started
 
 ### Prerequisites
