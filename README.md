@@ -5,15 +5,31 @@
 The purpose of this project is to transform the different ways we visualize Venice. We propose four implementations in this project:
 
 - Photorealistic Venice:
-  - Monochrome drawings/paintings -> photos (model name: `bw`)
-  - Colour paintings -> photos (model name: `color`)
+  - Monochrome drawings/paintings -> photos (model name: `bwPhotoF`)
+  - Colour paintings -> photos (model name: `cPhotoF`)
 - Underwater Venice:
   - Photos -> underwater rendering of the photos (model name: `underwater`)
 
 Here are some input/output pairs of each of the models:
-  
-[TODO examples]
-  
+
+<p align="center">
+  <img src="imgs/bw-outputs.png" width="700"/>
+  <br>
+    <em>Fig. 1: Monochrome model sample results (left: input monochrome drawing/painting, right: photorealistic rendering)</em>
+</p>
+
+<p align="center">
+  <img src="imgs/color-outputs.png" width="700"/>
+  <br>
+    <em>Fig. 2: Color model sample results (left: input color painting, right: photorealistic rendering)</em>
+</p>
+
+<p align="center">
+  <img src="imgs/underwater-results.png" width="700"/>
+  <br>
+    <em>Fig. 3: Underwater model sample results (left: input photo, right: underwater rendering of photo)</em>
+</p>
+
 ## Getting started
 
 ### Prerequisites
@@ -79,16 +95,16 @@ You can use the same directory for training or testing. Alternatively, you can p
 
 To train a model, simply run `python train.py --dataroot [DATA_DIR] --name [MODEL_NAME]`. To access modifiable training parameters, run `python train.py --help`.
 
-The training script including modified parameters used for `color` model is the following:
+The training script including modified parameters used for `cPhotoF` model is the following:
 
 ```
-python train.py --dataroot [DATA_DIR] --name color --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
+python train.py --dataroot [DATA_DIR] --name cPhotoF --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
 ```
 
-The training script including modified parameters used for `bw` model is the following:
+The training script including modified parameters used for `bwPhotoF` model is the following:
 
 ```
-python train.py --dataroot [DATA_DIR] --name bw --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
+python train.py --dataroot [DATA_DIR] --name bwPhotoF --CUT_mode CUT --n_epochs 150 --n_epochs_decay 300 --batch_size 4 --selfAttn 1 --normG spectral --edgeLoss 0.4 --canny1 350 --canny2 400 --lr 0.00018 --normD batch
 ```
 
 The training script including modified parameters used for `underwater` model is the following:
