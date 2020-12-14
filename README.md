@@ -2,7 +2,7 @@
 
 ***Note**: The code in this project borrows heavily from the [PyTorch implementation of CUT](https://github.com/taesungp/contrastive-unpaired-translation)*
 
-The purpose of this project is to transform the different ways we visualize Venice. We propose four implementations in this project:
+The purpose of this project is to transform the different ways we visualize Venice. We propose three implementations in this project:
 
 - Photorealistic Venice:
   - Monochrome drawings/paintings -> photos (model name: `bwPhotoF`)
