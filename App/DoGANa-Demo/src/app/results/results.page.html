@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <img routerLink='../#/home' slot="start" class="EPFL-Logo" src="../assets/EPFL_Logo.png">
+      <ion-title class="header-text">Punta Della DoGANa: Style Transfer for Historical Images of Venice</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  
+      <h4 style= "margin-left: 60px;">Results of Image Conversion</h4>
+  
+
+  	<div style= "margin-left: 60px;">
+        
+        <img style="display:inline-block; margin:10px 10px 5px 10px;" *ngFor="let img of demoImgsGen" src="../assets/PHP/{{img}}"/>
+    </div>
+
+     <ion-button type="submit" (click)="returnModel();" style="width: 90%; margin: 20px 45px 20px 45px;">Try Again!</ion-button>
+ </ion-content>

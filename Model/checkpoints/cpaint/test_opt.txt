@@ -5,11 +5,10 @@
                    canny2: 200                           
           checkpoints_dir: ./checkpoints                 
                 crop_size: 256                           
-                 dataroot: test_data/input/cpaint/       	[default: placeholder]
+                 dataroot: ./datasets/bwPhoto            	[default: placeholder]
              dataset_mode: unaligned                     
                 direction: AtoB                          
           display_winsize: 256                           
-                   dogana: cpaint                        
                easy_label: experiment_name               
                  edgeLoss: 0.0                           
                     epoch: latest                        
@@ -41,8 +40,8 @@ nce_includes_all_negatives_from_minibatch: False
           no_antialias_up: False                         
                no_dropout: True                          
                   no_flip: False                         
-                    normD: instance                      
-                    normG: instance                      
+                    normD: batch                         	[default: instance]
+                    normG: spectral                      	[default: instance]
               num_patches: 256                           
                  num_test: 50                            
               num_threads: 4                             
@@ -52,7 +51,7 @@ nce_includes_all_negatives_from_minibatch: False
                preprocess: resize_and_crop               
          random_scale_max: 3.0                           
               results_dir: ./results/                    
-                 selfAttn: False                         
+                 selfAttn: 2                             	[default: 0]
            serial_batches: False                         
 stylegan2_G_num_downsampling: 1                             
                    suffix:                               

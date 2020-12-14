@@ -1,0 +1,148 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <img routerLink='../#/home' slot="start" class="EPFL-Logo" src="../assets/EPFL_Logo.png">
+      <ion-title class="header-text">Punta Della DoGANa: Style Transfer for Historical Images of Venice</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+
+
+  <div style = "margin-left:10%; margin-right:10%;">
+      <h4>Painting or Drawing to Photorealistic Image Conversion</h4>
+      <p> In this subsection you can select a model, use our images or add your own, and then convert them automatically to a photorealistic image of Venice. Both models are our extension of a Contrastive Unpaired Translation Generative Adversarial Network which utilize edgeloss with a weighting of 0.4 and canny filter values of 350 / 450 respectively, spectral normalization on the Resnet blocks, batch normalization on the parameters, and a self-attention block before the Resnet blocks. More information is available on the model architecture on the information page.
+      </p>
+  </div>
+
+  <div style="width:100%; background-color:black;">
+    <div style="display:inline-block; margin: 10px 10px 30px 30px;">
+      <h5 style="margin: 15px 0 -15px 10px; color: white;"> Greyscale Drawing or Painting ---> Photorealistic Image</h5>
+      <div style="display:inline-block; margin:10px 10px 5px 10px;">
+        <p style="margin-left: 5px; color: white;"> Input Image Example: </p>
+        <img src="../assets/BW_Example.png" style="float:left; height:220px; width: 220px;"/>
+      </div>
+      <div style="display:inline-block; margin:10px 10px 5px 10px;">
+        <p style="margin-left: 5px; color: white;"> Target Image Example: </p>
+        <img src="../assets/Real_Example2.png"style="float:left; height:220px; width: 220px;"/>
+      </div>
+      <div style="display:inline-block; margin:10px 10px 5px 10px;">
+        <p style="margin-left: 5px; color: white;"> Output Image Example: </p>
+        <img src="../assets/BW_Fake.png" style="float:left; height:220px; width: 220px;"/>
+      </div>
+    </div>
+
+    <div style="display:inline-block;  margin: 10px 30px 30px 10px;">
+      <h5 style="margin: 15px 0 -15px 10px ; color: white;"> Color Painting ---> Photorealistic Image</h5>
+      <div style="display:inline-block; margin:10px 10px 5px 30px;">
+        <p style="margin-left: 5px; color: white;"> Input Image Example: </p>
+        <img src="../assets/C_Example.png" style="float:left; height:220px; width: 220px;"/>
+      </div>
+      <div style="display:inline-block; margin:10px 10px 5px 10px;">
+        <p style="margin-left: 5px; color: white;"> Target Image Example: </p>
+        <img src="../assets/Real_Example.png"style="float:left; height:220px; width: 220px;"/>
+      </div>
+      <div style="display:inline-block; margin:10px 10px 5px 10px;">
+        <p style="margin-left: 5px; color: white;"> Output Image Example: </p>
+        <img src="../assets/C_Fake.png" style="float:left; height:220px; width: 220px;"/>
+      </div>
+    </div>
+
+    <div style="display:inline-block;  margin: 10px 30px 30px 10px;">
+      <h5 style="margin: 15px 0 -15px 10px ; color: white;"> Photographic Image ---> Underwater Image</h5>
+      <div style="display:inline-block; margin:10px 10px 5px 10px;">
+        <p style="margin-left: 5px; color: white;"> Input Image Example: </p>
+        <img src="../assets/U_Example.jpeg" style="float:left; height:220px; width: 220px;"/>
+      </div>
+      <div style="display:inline-block; margin:10px 10px 5px 10px;">
+        <p style="margin-left: 5px; color: white;"> Target Image Example: </p>
+        <img src="../assets/U_Target.png"style="float:left; height:220px; width: 220px;"/>
+      </div>
+      <div style="display:inline-block; margin:10px 10px 5px 10px;">
+        <p style="margin-left: 5px; color: white;"> Output Image Example: </p>
+        <img src="../assets/U_Fake.png" style="float:left; height:220px; width: 220px;"/>
+      </div>
+    </div>
+    <div >
+     <div style="display:inline-block; margin: -20px 0 30px 40px;">
+        <input type="radio" id="model1" name="model" value="BWModel" (click)="displayGrey()" checked>
+        <label for="model1" style="color:white; margin-left:5px;"> Use the greyscale model! </label>
+    </div>
+    <div style="display:inline-block; margin-left:40px;">
+        <input type="radio" id="model2" name="model" value="ColorModel" (click)="displayColor()">
+        <label for="model2" style="color:white;"> Use the color model! </label>
+    </div>
+    <div style="display:inline-block; margin-left:40px;">
+        <input type="radio" id="model3" name="model" value="UWModel" (click)="displayUnderwater()">
+        <label for="model3" style="color:white;"> Use the Underwater model! </label>
+    </div>
+  </div>
+  </div>
+
+ <div style = "margin-left:10%; margin-right:10%;">
+          <p> If you select the demo images, the model will run a few images we preselected from our training dataset. However, you can also upload your own images to be converted. We will save these images for our user gallery. 
+          </p>
+  </div>
+
+
+   
+
+  <div style="width:100%; background-color:black;">
+    
+       <div style="display:inline-block; margin: 20px 0 0 40px;">
+          <input type="radio" id="dataset1" name="dataset" value="DemoData" (click)="displayDemo()" checked>
+          <label for="dataset1" style="color:white;"> Use our Demo Images! </label>
+      </div>
+      <div style="display:inline-block; margin-left:40px;">
+          <input type="radio" id="dataset2" name="dataset" value="UploadData" (click)="displayOwn()">
+          <label for="dataset2" style="color:white;"> Use your own images! </label>
+      </div>
+    
+
+    <div id="demoDatasetDisplay" style=" margin-left:40px; margin-top:10px; display: block;">
+      <div id="greyDemoDatasetDisplay" style="display: block;">
+        <p> Demo Image Dataset for Greyscale Model: </p>
+        <img style="display:inline-block; margin:10px 10px 5px 10px;" *ngFor="let img of demoImgsGrey" src="../assets/PHP/{{img}}"/>
+      </div>
+
+      <div id="colorDemoDatasetDisplay" style="display: none;">
+        <p> Demo Image Dataset for Color Model: </p>
+        <img style="display:inline-block; margin:10px 10px 5px 10px;" *ngFor="let img of demoImgsColor" src="../assets/PHP/{{img}}"/>
+      </div>
+   
+
+    <div id="underwaterDemoDatasetDisplay" style="display: none;">
+        <p> Demo Image Dataset for Underwater Model: </p>
+        <img style="display:inline-block; margin:10px 10px 5px 10px;" *ngFor="let img of demoImgsUnderwater" src="../assets/PHP/{{img}}"/>
+    </div>
+    </div>
+
+     <div id="ownDatasetDisplay" style="display: none; margin-left:20px; margin-top: 20px;">
+          <form id="fileForm" style="margin-left:20px; display:inline-block;">
+                  Add Images:
+                  <input style="display:inline-block; margin-left:30px; margin-top:20px;" id="imageFile" type="file" name="files[]" multiple>
+          </form>
+          
+          <ion-button  style="display:inline-block; margin-left:15px; margin-top:20px;" type="submit" (click)="getFile();">Add Images</ion-button>
+
+
+      <div  style=" margin-left:40px; margin-top:10px; display: block;">
+      <div  style="display: block;">
+        <p> Your Image Dataset: </p>
+        <img style="display:inline-block; margin:10px 10px 5px 10px; width:220px; height:220px;" *ngFor="let img of demoImgsUser" src="../assets/PHP/{{img}}"/>
+      </div>
+    </div>
+  </div>
+
+
+    <ion-button type="submit" (click)="testModel();" style="width: 90%; margin: 20px 45px 20px 45px;">Test Model</ion-button>
+
+    <ion-button type="submit" (click)="viewResults();" style="width: 90%; margin: 20px 45px 20px 45px;">View Results</ion-button>
+
+    
+  </div>
+
+</ion-content>
+
+
+ 
