@@ -128,3 +128,11 @@ If you do not specify `results_dir`, the output results will be saved in `result
 The parameter `name` specifies which of the four models you would like to test. The options are: `bw`, `color`, `underwater`.
 
 To access more testing parameters, run `python test_dogana.py --help`.
+
+### Application 
+
+We have provided a progressive web application for testing the models with a front end rather than through the command line.
+
+In order to use the app, the user must have the ionic framework and php installed on their machine. Then simply instantiate a default php server in the directory `App/Dogana-Demo/src/asset/PHP/` with `php -S localhost:8000`. 
+
+Then, return to the `Dogana-Demo` directory and run  `ionic serve`. This will automatically start the web server on your local machine and allow you to play with all 3 models using our demo images or your own. 
