@@ -125,7 +125,7 @@ python test_dogana.py --dataroot [DATA_DIR] --results_dir [RESULTS_DIR] --name [
 
 If you do not specify `results_dir`, the output results will be saved in `results/`.
 
-The parameter `name` specifies which of the four models you would like to test. The options are: `bw`, `color`, `underwater`.
+The parameter `name` specifies which of the three models you would like to test. The options are: `bwPhotoF`, `cPhotoF`, `underwater`.
 
 To access more testing parameters, run `python test_dogana.py --help`.
 
