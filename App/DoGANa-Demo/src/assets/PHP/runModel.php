@@ -7,11 +7,11 @@
 	if($model == 'BWModel'){
 		echo 'here';
 		if($data == 'DemoData'){
-			$command = escapeshellcmd('python3 ../../../../../Model/test_dogana.py --dataroot ./datasets/demoGrey --name bwPhoto --CUT_mode CUT --selfAttn 2 --normG spectral --normD batch');
+			$command = escapeshellcmd('python3 ../../../../../Model/test_dogana.py --dataroot ./datasets/demoGrey --name bwPhoto --CUT_mode CUT --selfAttn 1 --normG spectral --normD batch');
 			$output = shell_exec($command);
 		}
 		else if($data == 'UploadData'){
-			$command = escapeshellcmd('python3 ../../../../../Model/test_dogana.py --dataroot ./datasets/userImgs --name bwPhoto --CUT_mode CUT --selfAttn 2 --normG spectral --normD batch');
+			$command = escapeshellcmd('python3 ../../../../../Model/test_dogana.py --dataroot ./datasets/userImgs --name bwPhoto --CUT_mode CUT --selfAttn 1 --normG spectral --normD batch');
 			$output = shell_exec($command);
 		}
 	} elseif ($model == 'ColorModel'){

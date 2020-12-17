@@ -17,8 +17,8 @@ export class HomePage{
   constructor(private router: Router) {
   	
   	var request1 = new XMLHttpRequest();
-	request1.open("POST", "http://0.0.0.0:8000/demoImageRetrieval.php", true);
-	request1.send();
+	   request1.open("POST", "http://0.0.0.0:8000/demoImageRetrieval.php", true);
+	 request1.send();
 
 	var request = new XMLHttpRequest();
     request.open("GET", "../assets/PHP/imageNamesGrey.json", false);
