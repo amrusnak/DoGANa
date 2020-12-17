@@ -2,7 +2,7 @@
 
 ***Note**: The code in this project borrows heavily from the [PyTorch implementation of CUT](https://github.com/taesungp/contrastive-unpaired-translation)*
 
-The purpose of this project is to transform the different ways we visualize Venice. We propose four implementations in this project:
+The purpose of this project is to transform the different ways we visualize Venice. We propose three implementations in this project:
 
 - Photorealistic Venice:
   - Monochrome drawings/paintings -> photos (model name: `bwPhotoF`)
@@ -125,6 +125,14 @@ python test_dogana.py --dataroot [DATA_DIR] --results_dir [RESULTS_DIR] --name [
 
 If you do not specify `results_dir`, the output results will be saved in `results/`.
 
-The parameter `name` specifies which of the four models you would like to test. The options are: `bw`, `color`, `underwater`.
+The parameter `name` specifies which of the three models you would like to test. The options are: `bwPhotoF`, `cPhotoF`, `underwater`.
 
 To access more testing parameters, run `python test_dogana.py --help`.
+
+### Application 
+
+We have provided a progressive web application for testing the models with a front end rather than through the command line.
+
+In order to use the app, the user must have the ionic framework and php installed on their machine. Then simply instantiate a default php server in the directory `App/Dogana-Demo/src/asset/PHP/` with `php -S localhost:8000`. 
+
+Then, return to the `Dogana-Demo` directory and run  `ionic serve`. This will automatically start the web server on your local machine and allow you to play with all 3 models using our demo images or your own. 
